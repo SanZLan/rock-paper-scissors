@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissors</title>
+  </head>
+  <body></body>
+  <script>
+    // Set computer play
+    function computerPlay() {
+      // Generate random number between 1 and 3
+      let randomNumber = Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+      // Assign Rock, Paper or Scissors based on random number
+      let playSelection =
+        randomNumber === 1
+          ? "Rock"
+          : randomNumber === 2
+          ? "Paper"
+          : randomNumber === 3
+          ? "Scissors"
+          : null;
+
+      return playSelection;
+    }
+
+    // Set player play
+    function playerInput() {
+      let playerInput = prompt("Whats your choice").trim();
+      playerInput =
+        playerInput[0].toUpperCase() + playerInput.substring(1).toLowerCase();
+      return playerInput;
+    }
+
+    let playerWins = 0;
+    let computerWins = 0;
+
+    function playRound(computerSelection, playerSelection) {
+      let roundResult;
+      if (playerSelection === computerSelection) {
+        roundResult = `${playerSelection} and ${computerSelection}. It's a tie.`;
+      } else if (
+        (playerSelection === "Rock" && computerSelection === "Scissors") ||
+        (playerSelection === "Scissors" && computerSelection === "Paper") ||
+        (playerSelection === "Paper" && computerSelection === "Rock")
+      ) {
+        roundResult = `Great! ${playerSelection} beats ${computerSelection}. You win the round.`;
+        playerWins += 1;
+      } else {
+        roundResult = `Bummer... ${computerSelection} blows ${playerSelection}. You lost the round.`;
+        computerWins += 1;
+      }
+
+      return roundResult;
+    }
+
+    for (let i = 0; i < 5; i++) {
+      const computerSelection = computerPlay();
+      console.log(computerSelection);
+
+      const playerSelection = playerInput();
+      console.log(playerSelection);
+
+      let gameResult;
+
+      console.log(
+        `Game ${i + 1}: ${playRound(computerSelection, playerSelection)}`
+      );
+
+      if (playerWins === 3 || computerWins === 3 || i === 4) {
+        if (playerWins === computerWins) {
+          gameResult = "Game ends on a tie.";
+        } else if (playerWins > computerWins) {
+          gameResult = "Congratulations! You won the game.";
+        } else {
+          gameResult = "Game over. You lost.";
+        }
+        console.log(gameResult);
+        break;
+      }
+    }
+  </script>
+</html>
